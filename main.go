@@ -7,7 +7,8 @@ import (
 )
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	name := request.QueryStringParameters["name"]
+	//name := request.QueryStringParameters["name"]
+	name := request.Body
 	response := fmt.Sprintf("Hello %s", name)
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
