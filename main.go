@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"encoding/json"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -27,7 +28,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	// We will build the BodyResponse and send it back in json form
 	bodyResponse := BodyResponse{
-		ResponseName: bodyRequest.RequestName + " LastName",
+		ResponseName: bodyRequest.RequestName + os.Getenv("LAST_NAME"),
 	}
 
 	// Marshal the response into json bytes, if error return 404
