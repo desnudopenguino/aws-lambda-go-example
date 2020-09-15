@@ -10,13 +10,26 @@
     </form>
 
     <script>
+      var serializeForm = function (form) {
+	var obj = {};
+	var formData = new FormData(form);
+	for (var key of formData.keys()) {
+		obj[key] = formData.get(key);
+	}
+	return obj;
+      };
+
       var formElem = document.getElementById('formElem')
+
       formElem.onsubmit = async (e) => {
         e.preventDefault();
 
         let response = await fetch('/.netlify/functions/hello-lambda', {
           method: 'POST',
-          body: new FormData(formElem)
+          body: JSON.stringify(serializeForm(formElem)),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+	  }
         });
 
         let result = await response.json();
