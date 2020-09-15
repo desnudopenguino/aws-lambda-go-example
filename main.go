@@ -17,10 +17,11 @@ type BodyResponse struct {
 }
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	/*
 	bodyRequest := BodyRequest{
 		RequestName: "",
 	}
-
+	*/
 	return events.APIGatewayProxyResponse{Body: string(fmt.Sprintf("%v", request)), StatusCode: 200}, nil
 	//name := request.QueryStringParameters["name"]
 	/*
