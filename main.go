@@ -19,7 +19,10 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	bodyRequest := BodyRequest{
 		RequestName: "",
 	}
+
+	return events.APIGatewayProxyResponse{Body: string(fmt.Sprintf("%v", request)), StatusCode: 200}, nil
 	//name := request.QueryStringParameters["name"]
+	/*
 	err := json.Unmarshal([]byte(request.Body), &bodyRequest)
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
@@ -38,6 +41,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	//Returning response with AWS Lambda Proxy Response
 	return events.APIGatewayProxyResponse{Body: string(response), StatusCode: 200}, nil
+	*/
 }
 
 func main() {
