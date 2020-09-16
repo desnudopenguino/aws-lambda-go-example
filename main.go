@@ -20,7 +20,9 @@ type BodyResponse struct {
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	bodyRequest := BodyRequest{
-		RequestName: "",
+		ContactName: "",
+		ContactEmail: "",
+		ContactMessage: "",
 	}
 
 	err := json.Unmarshal([]byte(request.Body), &bodyRequest)
@@ -30,7 +32,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	// We will build the BodyResponse and send it back in json form
 	bodyResponse := BodyResponse{
-		ResponseMsg: bodyRequest.ContactName +" ("+ bodyResponse.ContactEmail +") says: "+ bodyResponse.ContactMessage +" "+ os.Getenv("LAST_NAME"),
+		ResponseMsg: bodyRequest.ContactName +" ("+ bodyRequest.ContactEmail +") says: "+ bodyRequest.ContactMessage +" "+ os.Getenv("LAST_NAME"),
 	}
 
 	// Marshal the response into json bytes, if error return 404
