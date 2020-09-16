@@ -8,12 +8,14 @@ import (
 )
 
 type BodyRequest struct {
-	RequestName string `json:"name"`
+	ContactName string `json:"name"`
+	ContactEmail string `json:"email"`
+	ContactMessage string `json:"message"`
 }
 
 // BodyResponse is our self-made struct to build response for Client
 type BodyResponse struct {
-	ResponseName string `json:"name"`
+	ResponseMsg string `json:"output"`
 }
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
@@ -28,7 +30,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	// We will build the BodyResponse and send it back in json form
 	bodyResponse := BodyResponse{
-		ResponseName: bodyRequest.RequestName + os.Getenv("LAST_NAME"),
+		ResponseMsg: bodyRequest.ContactName +" ("+ bodyResponse.ContactEmail +") says: "+ bodyResponse.ContactMessage +" "+ os.Getenv("LAST_NAME"),
 	}
 
 	// Marshal the response into json bytes, if error return 404
