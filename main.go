@@ -57,7 +57,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 }
 
 // send function
-func sendMail(from_email string, from_name string, message_body string) {
+func sendMail(from_email string, from_name string, message_body string) string {
     // Create an instance of the Mailgun Client
     mg := mailgun.NewMailgun(my_domain, privateAPIKey)
 
@@ -81,7 +81,7 @@ func sendMail(from_email string, from_name string, message_body string) {
     if err != nil {
         return err.Error()
     }
-    return true
+    return "success"
 }
 
 func main() {
