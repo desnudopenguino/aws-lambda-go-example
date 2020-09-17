@@ -1,6 +1,8 @@
 package main
 
 import (
+        "context"
+        "time"
 	"os"
 	"encoding/json"
 	"github.com/aws/aws-lambda-go/events"
@@ -41,7 +43,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	// We will build the BodyResponse and send it back in json form
 	bodyResponse := BodyResponse{
-		ResponseMsg: sendRequest,
+		ResponseMsg: sendResult,
 	}
 
 	// Marshal the response into json bytes, if error return 404
@@ -55,7 +57,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 }
 
 // send function
-func SendMail(from_email string, from_name string, message_body string) {
+func sendMail(from_email string, from_name string, message_body string) {
     // Create an instance of the Mailgun Client
     mg := mailgun.NewMailgun(my_domain, privateAPIKey)
 
