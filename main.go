@@ -45,10 +45,10 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	captcha, _ := recaptcha.NewReCAPTCHA(recaptchaSecret, recaptcha.V3, 5 * time.Second)
 
-	err := captcha.VerifyWithOptions(bodyRequest.RecaptchaResponse, VerifyOption{Action: "contact", Threshold: 0.7})
+	captcha_err := captcha.Verify(bodyRequest.RecaptchaResponse)
 
-	if err != nil {
-		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
+	if captcha_err != nil {
+		return events.APIGatewayProxyResponse{Body: captcha_err.Error(), StatusCode: 404}, nil
 	}
 
 	sendResult := sendMail(bodyRequest.ContactEmail, bodyRequest.ContactName, bodyRequest.ContactMessage)
