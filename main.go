@@ -8,13 +8,14 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
         "github.com/mailgun/mailgun-go"
+	"gopkg.in/ezzarghili/recaptcha-go.v4"
 )
-
 
 var my_domain string = os.Getenv("MAIL_DOMAIN")
 
-
 var privateAPIKey string = os.Getenv("API_KEY")
+
+var recaptchaSecret string = os.Getenv("RECAPTCHA_SECRET")
 
 type BodyRequest struct {
 	ContactName string `json:"name"`
@@ -28,13 +29,23 @@ type BodyResponse struct {
 }
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+
 	bodyRequest := BodyRequest{
+		RecaptchaResponse: "",
 		ContactName: "",
 		ContactEmail: "",
 		ContactMessage: "",
 	}
 
 	err := json.Unmarshal([]byte(request.Body), &bodyRequest)
+	if err != nil {
+		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
+	}
+
+	captcha, _ := recaptcha.NewReCAPTCHA(recaptchaSecret, recaptcha.V3, 5 * time.Second)
+
+	err := captcha.VerifyWithOptions(bodyRequest.RecaptchaResponse, VerifyOption{Action: "contact", Threshold: 0.7})
+
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
 	}
