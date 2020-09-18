@@ -18,6 +18,7 @@ var privateAPIKey string = os.Getenv("API_KEY")
 var recaptchaSecret string = os.Getenv("RECAPTCHA_SECRET")
 
 type BodyRequest struct {
+	RecaptchaResponse string `json:"g-recaptcha-response"`
 	ContactName string `json:"name"`
 	ContactEmail string `json:"email"`
 	ContactMessage string `json:"message"`
