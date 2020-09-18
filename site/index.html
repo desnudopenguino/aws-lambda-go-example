@@ -15,6 +15,11 @@
     </form>
 
     <script>
+    </script>
+
+  </body>
+ <script src="https://www.google.com/recaptcha/api.js"></script>
+ <script>
       var serializeForm = function (form) {
 	var obj = {};
 	var formData = new FormData(form);
@@ -26,14 +31,6 @@
 
       var formElem = document.getElementById('formElem')
 
-    </script>
-
-  </body>
- <script src="https://www.google.com/recaptcha/api.js"></script>
- <script>
-   function onSubmit(token) {
-	   console.log(token);
-	   /*
       formElem.onsubmit = async (e) => {
         e.preventDefault();
 
@@ -49,7 +46,9 @@
 
         console.log(result.message);
       };
-      */
+
+   function onSubmit(token) {
+	formElem.submit();
    }
  </script>
 </html>
