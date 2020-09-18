@@ -8,7 +8,6 @@
       <input type="text" name="name" value="John Doe" />
       <input type="email" name="email" />
       <textarea name="message"></textarea>
-      <input type="submit">
       <button class="g-recaptcha"
         data-sitekey="6Lc2o80ZAAAAAEB42frTSCnJJluseBxuHOuPmthf"
         data-callback='onSubmit'
@@ -33,7 +32,8 @@
  <script src="https://www.google.com/recaptcha/api.js"></script>
  <script>
    function onSubmit(token) {
-     document.getElementById("formElem").submit();
+	   console.log(token);
+	   /*
       formElem.onsubmit = async (e) => {
         e.preventDefault();
 
@@ -49,6 +49,7 @@
 
         console.log(result.message);
       };
+      */
    }
  </script>
 </html>
