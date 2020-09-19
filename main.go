@@ -22,6 +22,7 @@ type BodyRequest struct {
 	ContactName string `json:"name"`
 	ContactEmail string `json:"email"`
 	ContactMessage string `json:"message"`
+	BotCheck string `json:"comment"`
 }
 
 // BodyResponse is our self-made struct to build response for Client
@@ -36,11 +37,16 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		ContactName: "",
 		ContactEmail: "",
 		ContactMessage: "",
+		BotCheck: "",
 	}
 
 	err := json.Unmarshal([]byte(request.Body), &bodyRequest)
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
+	}
+
+	if len(bodyRequest.BotCheck) > 0 {
+		return events.APIGatewayProxyResponse{Body: false, StatusCode: 404}, nil
 	}
 
 	captcha, _ := recaptcha.NewReCAPTCHA(recaptchaSecret, recaptcha.V3, 5 * time.Second)
