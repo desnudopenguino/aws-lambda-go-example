@@ -46,7 +46,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 
 	if len(bodyRequest.BotCheck) > 0 {
-		return events.APIGatewayProxyResponse{Body: false, StatusCode: 404}, nil
+		return events.APIGatewayProxyResponse{Body: "0", StatusCode: 404}, nil
 	}
 
 	captcha, _ := recaptcha.NewReCAPTCHA(recaptchaSecret, recaptcha.V3, 5 * time.Second)
